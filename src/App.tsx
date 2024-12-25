@@ -1,11 +1,12 @@
-import GameOnPage from "./pages/GameOnPage"
+
+import RootRouter from "./routes"
 
 
 function App() {
 
   return (
     <>
-      <GameOnPage />
+      <RootRouter />
     </>
   )
 }

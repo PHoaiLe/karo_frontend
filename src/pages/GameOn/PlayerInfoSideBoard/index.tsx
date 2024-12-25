@@ -2,14 +2,49 @@ import Avatar from "@mui/material/Avatar"
 import Box from "@mui/material/Box"
 import Grid2 from "@mui/material/Grid2"
 import Stack from "@mui/material/Stack"
+import { useEffect, useState } from "react"
 
-interface PlayerInfoSideBoardProperties
+export interface PlayerInfoSideBoardProperties
 {
-
+    username: string,
+    avatar: string,
+    numOfMatchs: number,
+    numOfWonMatchs: number,
 }
 
-function PlayerInfoSideBoard({}: PlayerInfoSideBoardProperties)
+interface SetupProp
 {
+    setupProp: PlayerInfoSideBoardProperties,
+}
+
+function PlayerInfoSideBoard({setupProp}: SetupProp)
+{
+
+    const [matchDisplay, setMatchDisplay] = useState<JSX.Element[]>([])
+
+    useEffect(() =>
+    {
+        const listOfMatchs = []
+
+        const numOfMatchsToWin = setupProp.numOfMatchs / 2 + 1;
+
+        for(let i = 0; i < setupProp.numOfWonMatchs; i++)
+        {
+            listOfMatchs.push(
+                <Box width={40} height={40} bgcolor={"#FF0000"}></Box>
+            )
+        }
+
+        for(let i = 0; i < numOfMatchsToWin - setupProp.numOfWonMatchs; i++)
+        {
+            listOfMatchs.push(
+                <Box width={40} height={40} bgcolor={"#D9D9D9"}></Box>
+            )
+        }
+
+        setMatchDisplay(listOfMatchs)
+    },
+    [setupProp.numOfWonMatchs, setupProp.numOfMatchs])
 
     return(
         <Grid2
@@ -44,9 +79,7 @@ function PlayerInfoSideBoard({}: PlayerInfoSideBoardProperties)
                     alignItems={"center"}
                     spacing={1.5}
                 >
-                    <Box width={40} height={40} bgcolor={"#FF0000"}></Box>
-                    <Box width={40} height={40} bgcolor={"#D9D9D9"}></Box>
-                    <Box width={40} height={40} bgcolor={"#D9D9D9"}></Box>
+                    {matchDisplay}
                 </Stack>
             </Stack>
 
@@ -58,13 +91,13 @@ function PlayerInfoSideBoard({}: PlayerInfoSideBoardProperties)
                 alignItems={"center"}
             >
                 <Box position={"relative"} width={"100%"} height={86} bgcolor={"#D9D9D9"}></Box>
-                <Box position={"absolute"}><Avatar alt="player_avatar" src="" sx={{width: 100, height: 100}}/></Box>
+                <Box position={"absolute"}><Avatar alt="player_avatar" src={`${setupProp.avatar}`} sx={{width: 100, height: 100}}/></Box>
             </Stack>
 
             <Box key={"player-id"} display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"} 
                 fontSize={22} fontWeight={300}
                 >
-                Challenger
+                {setupProp.username}
             </Box>
 
             <Box key={"countdown-clock"} display={"flex"} justifyContent={"center"} alignItems={"center"}

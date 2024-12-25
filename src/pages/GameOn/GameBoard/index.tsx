@@ -1,7 +1,7 @@
 import Grid2 from "@mui/material/Grid2"
-import GameCell, { GameCellProperties } from "./GameCell"
+import GameCell, {GameCellProperties} from "../../../components/GameOn/GameCell"
 import { useRef, useState } from "react"
-import { GameCellValue } from "./GameOnConstants"
+import { GameCellValue } from "../../../components/GameOn/GameOnConstants"
 
 interface GameBoardProperties
 {
